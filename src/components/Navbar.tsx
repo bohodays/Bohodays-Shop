@@ -3,24 +3,14 @@ import { FiShoppingBag } from "react-icons/fi";
 import { BsFillPencilFill } from "react-icons/bs";
 import { login, logout, onUserStateChange } from "../api/firebase";
 import { useState, useEffect } from "react";
-import { User } from "firebase/auth";
 import { userType } from "../types/user-type";
+import User from "./User";
 
 const Navbar = () => {
-  const [user, setUser] = useState<void | User | null>(null);
-
-  const handleLogin = () => {
-    login().then(setUser);
-  };
-
-  const handleLogout = () => {
-    logout().then(setUser);
-  };
+  const [user, setUser] = useState<userType>(null);
 
   useEffect(() => {
-    onUserStateChange((user: userType) => {
-      setUser(user);
-    });
+    onUserStateChange(setUser);
   }, []);
 
   return (
@@ -35,10 +25,11 @@ const Navbar = () => {
         <Link to={"/products/new"} className="text-2xl">
           <BsFillPencilFill />
         </Link>
+        {user && <User user={user} />}
         {user ? (
-          <button onClick={handleLogout}>Logout</button>
+          <button onClick={logout}>Logout</button>
         ) : (
-          <button onClick={handleLogin}>Login</button>
+          <button onClick={login}>Login</button>
         )}
       </nav>
     </header>
