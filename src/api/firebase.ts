@@ -56,7 +56,7 @@ export async function addNewProduct(product: productType, imageURL: string) {
   console.log(product);
 
   const id = uuid();
-  set(ref(database, `products/${id}`), {
+  return set(ref(database, `products/${id}`), {
     ...product,
     id,
     price: product.price,
