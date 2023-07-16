@@ -1,17 +1,14 @@
 import { Link } from "react-router-dom";
 import { FiShoppingBag } from "react-icons/fi";
 import { BsFillPencilFill } from "react-icons/bs";
-import { login, logout, onUserStateChange } from "../api/firebase";
-import { useState, useEffect } from "react";
-import { userType } from "../types/user-type";
+import { login, logout } from "../api/firebase";
 import User from "./User";
+import Button from "./UI/Button";
+import { useAuthContext } from "./context/AuthContext";
 
 const Navbar = () => {
-  const [user, setUser] = useState<userType>(null);
-
-  useEffect(() => {
-    onUserStateChange(setUser);
-  }, []);
+  const { user, login, logout } = useAuthContext() || {};
+  console.log(login);
 
   return (
     <header className="flex justify-between border-b border-gray-300 p-2">
@@ -21,7 +18,7 @@ const Navbar = () => {
       </Link>
       <nav className="flex items-center gap-4 font-semibold">
         <Link to={"/products"}>Products</Link>
-        <Link to={"/carts"}>Carts</Link>
+        {user && <Link to={"/carts"}>Carts</Link>}
         {user && (
           <Link to={"/products/new"} className="text-2xl">
             <BsFillPencilFill />
@@ -31,9 +28,9 @@ const Navbar = () => {
           <User photoURL={user.photoURL} displayName={user.displayName} />
         )}
         {user ? (
-          <button onClick={logout}>Logout</button>
+          <Button text={"Logout"} onClick={logout} />
         ) : (
-          <button onClick={login}>Login</button>
+          <Button text={"Login"} onClick={login} />
         )}
       </nav>
     </header>
