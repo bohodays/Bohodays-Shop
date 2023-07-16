@@ -1,11 +1,9 @@
 type userInfo = {
-  user: {
-    photoURL: string | null;
-    displayName: string | null;
-  };
+  photoURL: string | null | undefined;
+  displayName: string | null | undefined;
 };
 
-const User = ({ user: { photoURL, displayName } }: userInfo) => {
+const User = ({ photoURL, displayName }: userInfo) => {
   return (
     <div className="flex items-center">
       <img

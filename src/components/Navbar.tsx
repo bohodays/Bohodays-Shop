@@ -22,10 +22,14 @@ const Navbar = () => {
       <nav className="flex items-center gap-4 font-semibold">
         <Link to={"/products"}>Products</Link>
         <Link to={"/carts"}>Carts</Link>
-        <Link to={"/products/new"} className="text-2xl">
-          <BsFillPencilFill />
-        </Link>
-        {user && <User user={user} />}
+        {user && (
+          <Link to={"/products/new"} className="text-2xl">
+            <BsFillPencilFill />
+          </Link>
+        )}
+        {user && user.isAdmin && (
+          <User photoURL={user.photoURL} displayName={user.displayName} />
+        )}
         {user ? (
           <button onClick={logout}>Logout</button>
         ) : (
