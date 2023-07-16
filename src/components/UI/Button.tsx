@@ -1,5 +1,3 @@
-import React from "react";
-
 type propsType = {
   text: string;
   onClick?: () => void;

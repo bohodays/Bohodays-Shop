@@ -7,7 +7,9 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 import { userType } from "../types/user-type";
-import { getDatabase, ref, child, get } from "firebase/database";
+import { getDatabase, ref, set, get } from "firebase/database";
+import { v4 as uuid } from "uuid";
+import { productType } from "../pages/NewProduct";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -47,5 +49,18 @@ async function adminUser(user: userType) {
       return { ...user, isAdmin };
     }
     return user;
+  });
+}
+
+export async function addNewProduct(product: productType, imageURL: string) {
+  console.log(product);
+
+  const id = uuid();
+  set(ref(database, `products/${id}`), {
+    ...product,
+    id,
+    price: product.price,
+    image: imageURL,
+    options: product.options && product.options.split(","),
   });
 }

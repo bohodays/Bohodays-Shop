@@ -1,14 +1,12 @@
 import { Link } from "react-router-dom";
 import { FiShoppingBag } from "react-icons/fi";
 import { BsFillPencilFill } from "react-icons/bs";
-import { login, logout } from "../api/firebase";
 import User from "./User";
 import Button from "./UI/Button";
 import { useAuthContext } from "./context/AuthContext";
 
 const Navbar = () => {
   const { user, login, logout } = useAuthContext() || {};
-  console.log(login);
 
   return (
     <header className="flex justify-between border-b border-gray-300 p-2">
