@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 export type productCardType = {
   product: {
     id?: string;
@@ -11,10 +13,16 @@ export type productCardType = {
 };
 
 const ProductCard = ({
+  product,
   product: { id, image, title, category, price },
 }: productCardType) => {
+  const navigate = useNavigate();
+
   return (
-    <li className="rounded-lg shadow-md overflow-hidden cursor-pointer">
+    <li
+      onClick={() => navigate(`/products/${id}`, { state: { product } })}
+      className="rounded-lg shadow-md overflow-hidden cursor-pointer transition-all hover:scale-105"
+    >
       <img className="w-full" src={image} alt={title} />
       <div className="mt-2 px-2 text-lg flex justify-between items-center">
         {/* truncate를 설정해주면 텍스트가 길어지면 자동으로 ... 표시됨  */}
