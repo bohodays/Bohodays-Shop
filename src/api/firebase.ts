@@ -7,9 +7,10 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 import { userType } from "../types/user-type";
-import { getDatabase, ref, set, get } from "firebase/database";
+import { getDatabase, ref, set, get, remove } from "firebase/database";
 import { v4 as uuid } from "uuid";
 import { productType } from "../pages/NewProduct";
+import { IProduct } from "../types/product-type";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -72,4 +73,19 @@ export async function getProducts() {
     }
     return [];
   });
+}
+
+export async function getCart(userId: number) {
+  return get(ref(database, `carts/${userId}`)).then((snapshot) => {
+    const items = snapshot.val() || {};
+    return Object.values(items);
+  });
+}
+
+export async function addOrUpdateToCart(userId: number, product: IProduct) {
+  return set(ref(database, `carts/${userId}/${product.id}`), product);
+}
+
+export async function removeFromCart(userId: number, productId: number) {
+  return remove(ref(database, `carts/${userId}/${productId}`));
 }

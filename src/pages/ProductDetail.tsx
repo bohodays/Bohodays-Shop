@@ -1,8 +1,12 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import Button from "../components/UI/Button";
+import { useAuthContext } from "../context/AuthContext";
+import { addOrUpdateToCart } from "../api/firebase";
 
 const ProductDetail = () => {
+  const { uid } = useAuthContext();
+
   const {
     state: {
       product: { id, image, title, description, category, price, options },
@@ -15,6 +19,8 @@ const ProductDetail = () => {
 
   const handleClick = () => {
     // 여기서 장바구니에 추가하면 됨!
+    const product = { id, image, title, price, option: selected, quantity: 1 };
+    addOrUpdateToCart(uid, product);
   };
 
   const transPrice = (price: number) => {

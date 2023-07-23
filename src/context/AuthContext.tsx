@@ -1,10 +1,11 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { login, logout, onUserStateChange } from "../../api/firebase";
-import { userType } from "../../types/user-type";
+import { login, logout, onUserStateChange } from "../api/firebase";
+import { userType } from "../types/user-type";
 
-type authContextType =
+export type authContextType =
   | {
       user?: userType | null;
+      uid?: string | null;
       login?: () => void;
       logout?: () => void;
     }
@@ -24,12 +25,14 @@ export function AuthContextProvider({
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, login: login, logout: logout }}>
+    <AuthContext.Provider
+      value={{ user, uid: user && user.uid, login: login, logout: logout }}
+    >
       {children}
     </AuthContext.Provider>
   );
 }
 
-export function useAuthContext() {
+export function useAuthContext(): authContextType {
   return useContext(AuthContext);
 }
