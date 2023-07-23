@@ -8,7 +8,6 @@ import CartStatus from "./CartStatus";
 
 const Navbar = () => {
   const { user, login, logout } = useAuthContext() || {};
-  console.log(user?.isAdmin);
 
   return (
     <header className="flex justify-between border-b border-gray-300 p-2">
@@ -23,12 +22,12 @@ const Navbar = () => {
             <CartStatus />
           </Link>
         )}
-        {user && (
+        {user && user.isAdmin && (
           <Link to={"/products/new"} className="text-2xl">
             <BsFillPencilFill />
           </Link>
         )}
-        {user && user.isAdmin && (
+        {user && (
           <User photoURL={user.photoURL} displayName={user.displayName} />
         )}
         {user ? (

@@ -54,8 +54,6 @@ async function adminUser(user: userType) {
 }
 
 export async function addNewProduct(product: productType, imageURL: string) {
-  console.log(product);
-
   const id = uuid();
   return set(ref(database, `products/${id}`), {
     ...product,
@@ -75,17 +73,25 @@ export async function getProducts() {
   });
 }
 
-export async function getCart(userId: number): Promise<IProduct[]> {
+export async function getCart(
+  userId: string | null | undefined
+): Promise<IProduct[]> {
   return get(ref(database, `carts/${userId}`)).then((snapshot) => {
     const items = snapshot.val() || {};
     return Object.values(items);
   });
 }
 
-export async function addOrUpdateToCart(userId: number, product: IProduct) {
+export async function addOrUpdateToCart(
+  userId: string | null | undefined,
+  product: IProduct
+) {
   return set(ref(database, `carts/${userId}/${product.id}`), product);
 }
 
-export async function removeFromCart(userId: number, productId: number) {
+export async function removeFromCart(
+  userId: string | null | undefined,
+  productId: string
+) {
   return remove(ref(database, `carts/${userId}/${productId}`));
 }
