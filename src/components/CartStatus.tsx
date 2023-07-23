@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
 import { AiOutlineShoppingCart } from "react-icons/ai";
+import { useQuery } from "@tanstack/react-query";
 import { getCart } from "../api/firebase";
 import { useAuthContext } from "../context/AuthContext";
 

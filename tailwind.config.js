@@ -7,7 +7,7 @@ export default {
         brand: "#F96162",
       },
       backgroundImage: {
-        banner: `url('../public/images/banner.jpg')`,
+        banner: `url('../images/banner.jpg')`,
       },
     },
   },
