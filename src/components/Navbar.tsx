@@ -8,6 +8,7 @@ import CartStatus from "./CartStatus";
 
 const Navbar = () => {
   const { user, login, logout } = useAuthContext() || {};
+  console.log(user?.isAdmin);
 
   return (
     <header className="flex justify-between border-b border-gray-300 p-2">
